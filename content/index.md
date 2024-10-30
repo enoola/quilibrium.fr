@@ -2,7 +2,8 @@
 title: Quilibrium ( En Français )
 draft: false
 tags:
-  - "#presentation"
+  - depart
+  - liens-utiles
 ---
 Bienvenu à toi.
 

@@ -4,6 +4,7 @@ draft: false
 tags:
   - quilibrium
   - annonces
+  - majv2
 creation_date: 2024-10-30 15:10
 modification_date: 2024-10-30 15:12
 Annonce original: https://discord.com/channels/1212446221395042335/1212815856418164737/1301087575292903485

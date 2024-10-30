@@ -1,6 +1,6 @@
 ---
 title: Comment récupérer l'adresse de votre pièce après l'échec d'une opération de pontage
-draft: true
+draft: false
 tags:
   - quilibrium
   - crypto
@@ -13,17 +13,8 @@ sources:
   - https://docs.quilibrium.one/start/tutorials/qclient/how-to-retrieve-your-coin-address-after-a-failed-bridging-operation
   - https://discord.com/channels/1212446221395042335/1212815856418164737/1300826971802177557
 ---
-# Comment récupérer l'adresse de votre pièce après l'échec  d'un 'bridge'*
+# Comment récupérer l'adresse de votre pièce après l'échec  d'un 'bridge'
 
-Usually, you can retrieve your coin address with the qclient token coins command. See [qclient commands for token transfers](https://docs.quilibrium.one/start/qclient-commands-for-token-transfers)
-
-But in most cases, after a failed bridging operation, that command won't be able to query your coin address anymore.
-
-This is because your coin has been taken out of the Quilibrium network and reserved for minting on Ethereum, but because you did not finish the bridge successfully, the coin has remained in a sort of "limbo".
-
-This is why you should ALWAYS take note of your coin address before attempting to bridge.
-
-So, if you can't query your coin address directly anymore (when `qclient token coins` doesn't work), here are 4 alternative methods to find your coin address.
 
 En général, nous pouvons récupérer l'adresse de nos pièces avec la commande 
 `qclient token coins`
@@ -36,13 +27,13 @@ cette commande ne pourra pas retrouver l'adresse de votre pièce.
 C'est pourquoi vous devez TOUJOURS prendre note de l'adresse de votre pièce avant de tenter un pont. Donc, si vous ne pouvez plus interroger directement l'adresse de votre pièce (lorsque `qclient token coins` ne fonctionne pas), voici 4 méthodes alternatives pour trouver l'adresse de votre pièce.
 
 /!\ je n'ai pas encore eu ce problème. Donc je ne fait que reporter ce que j'ai glané. 
-## 1ère méthode: Décodage du premier format
+### 1ère méthode: Décodage du premier format
 
 Dans ce format, l'adresse de votre pièce est intégrée entre des chaînes de charactères statiques.
 #### Structure
 
 ```
-0x7472616e73666572[adresse_de_votre_pièce_sans_0x]1ac3290d57e064bdb5a57e874b59290226a9f9730d69f1d963600883789d6ee2
+0x7472616e73666572[adresse_de_ta_pièce_sans_0x]1ac3290d57e064bdb5a57e874b59290226a9f9730d69f1d963600883789d6ee2
 ```
 
 #### Exemple
@@ -61,89 +52,48 @@ Dans ce format, l'adresse de votre pièce est intégrée entre des chaînes de c
 
 This format combines your Ethereum address and coin address.
 
-#### 
-
-Structure
+#### Structure
 
 ```
-[your_ethereum_address][your_coin_address_without_0x]
+[ton_adresse_ethereum][adresse_de_ta_pièce_sans_0x]
 ```
 
-#### 
-
-[](https://docs.quilibrium.one/start/tutorials/qclient/how-to-retrieve-your-coin-address-after-a-failed-bridging-operation#example-1)
-
-Example
+#### Exemple
 
 ```
-# Original string:
+# adresse initiale:
 0xc0ffee254729296a45a3885639AC7E10F9d54979230f39c8656f7914f9ae86de19ab04f2377d651786eb145646209d40423573a2
 
-# Breakdown:
-Ethereum address: 0xc0ffee254729296a45a3885639AC7E10F9d54979
-Coin address: 0x230f39c8656f7914f9ae86de19ab04f2377d651786eb145646209d40423573a2
+# découpage:
+adress Ethereum : 0xc0ffee254729296a45a3885639AC7E10F9d54979
+adress de ta pièce : 0x230f39c8656f7914f9ae86de19ab04f2377d651786eb145646209d40423573a2
 ```
 
-### 
 
-[](https://docs.quilibrium.one/start/tutorials/qclient/how-to-retrieve-your-coin-address-after-a-failed-bridging-operation#where-to-find-these-strings-in-your-terminal-after-a-failed-bridging-operation)
+### Méthode 3 : Utiliser Etherscan
 
-Where to find these Strings in your terminal after a failed bridging operation
+Si tu as une transaction échouée :
 
-You can find the cross-mint hex strings in either:
+1. Va sur Etherscan.
+2. Trouve ta transaction.
+3. Clique sur « + Click to show more ».
+4. Sélectionne « Decode Input Data ».
+5. Cherche la valeur uid dans les données décodées.
 
-- Your `.bash_history` file
-    
-- By using the up arrow key in your terminal to browse command history
-    
+### Méthode 4 : Utiliser un nœud frais
 
----
+&nbsp;&nbsp;&nbsp;Je n’ai pas testé cette méthode, mais d’autres suggèrent qu’elle pourrait fonctionner.
 
-### 
+&nbsp;&nbsp;&nbsp;Lance un nœud frais, installe le qclient et importe le dossier .config pour les clés que tu souhaites interroger pour obtenir ton adresse de coin.
 
-[](https://docs.quilibrium.one/start/tutorials/qclient/how-to-retrieve-your-coin-address-after-a-failed-bridging-operation#method-3-using-etherscan)
+&nbsp;&nbsp;&nbsp;Une fois que ton nœud commence à se synchroniser, essaie à nouveau la commande qclient token coins.
 
-Method 3: Using Etherscan
+&nbsp;&nbsp;&nbsp;Comme ton nœud n’est pas entièrement synchronisé, il devrait théoriquement être capable de « consulter le passé » et de trouver ton adresse de coin, même si, en interrogeant cette information depuis un nœud complètement synchronisé, tu ne peux pas la voir.
 
-If you have a failed transaction:
+&nbsp;&nbsp;&nbsp;Le mode « Avancé » du pont affiche « Unknown Amount » lorsque tu colles ton adresse de coin.**
 
-1. Go to Etherscan
-    
-2. Find your transaction
-    
-3. Click on "+ Click to show more"
-    
-4. Select "Decode Input Data"
-    
-5. Look for the `uid` value in the decoded data
-    
+&nbsp;&nbsp;&nbsp;Si tu as récupéré ton adresse de coin et que tu essaies de finaliser le processus de pont en la collant directement via le mode « Avancé » du pont, tu verras le message « Unknown Amount ».
 
----
+&nbsp;&nbsp;&nbsp;Cela est normal, car le pont ne connaît pas le montant en QUIL pour ce coin, puisque celui-ci n’existe plus sur le réseau Quilibrium mais est déjà réservé pour le minting sur Ethereum.
 
-### 
-
-[](https://docs.quilibrium.one/start/tutorials/qclient/how-to-retrieve-your-coin-address-after-a-failed-bridging-operation#method-4-using-a-fresh-node)
-
-Method 4: Using a fresh node
-
-I have not tested this method, but it's been suggested by other that it coudl work
-
-Spin up a fresh node, install the qclient and import the .config folder for the keys that you want to query for your coin address.
-
-After your node begin syncing, try using the `qclient token coins` command again.
-
-Because your node is not fully synced, it should in theory be able to "look into the past" and find your coin address even if, when querying that info from a fully synced node, you cannot see it.
-
----
-
-### 
-
-[](https://docs.quilibrium.one/start/tutorials/qclient/how-to-retrieve-your-coin-address-after-a-failed-bridging-operation#the-bridge-advanced-mode-shows-unknown-amount-when-i-paste-my-coin-address)
-
-The bridge "Advanced" mode shows "Unknown Amount" when I paste my coin address.
-
-If you have retrieved your coin address and are trying to finish the bridging process by pasting it directly via the "Advanced" bridge mode, you will see an "Unknown Amount" message.
-
-This is normal, as the bridge doesn't know the amount in QUIL for that coin, since it no longer exists on the Quilibrium network but is already reserved for minting on Ethereum.
-
-You can proceed with finishing the bridge, even if the amount is unknown, and your coin should be bridged successfully.
+&nbsp;&nbsp;&nbsp;Tu peux continuer et finaliser le pontage, même si le montant est inconnu, et ton coin devrait être transféré avec succès. 😊
