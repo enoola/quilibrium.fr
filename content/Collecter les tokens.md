@@ -22,7 +22,7 @@ en somme lorsque vous
 
 # Commandes pour transférer vos token(s)
 
-Avec la sortie de Quilibrium 2.0, **Qclient** est mis à disposition sous forme de  binaire directement. 
+Avec la sortie de Quilibrium 2.0, **Qclient** est mis à disposition sous forme de  binaires directement. 
 ### Méthode pour récupérer les fichiers constituant le client
 1. Obtenir la liste des fichiers : https://releases.quilibrium.com/qclient-release
 	exemple contenu :
@@ -94,7 +94,6 @@ client [--config=<other path than ../node/.config/>] <app> <cmd> <param1> <param
 
 ### 
 
-[](https://docs.quilibrium.one/start/qclient-commands-for-token-transfers#id-2.-querying-balance)
 
 2. Querying Balance
 
